@@ -1,5 +1,6 @@
 /*
 @author William J. Horn
+@date: 09/05/2022
 
 Better version of modelArgs function. Still work in progress
 
@@ -11,6 +12,7 @@ const [arg1, arg2, arg3] = modelArgs({
   { rule: ['number'] }
 }, 1, 'test', false)
 
+reach me by email if you have any questions/issues: williamjosephhorn@gmail.com
 */
 
 const objectHasKey = require('../lib/objectHasKey');

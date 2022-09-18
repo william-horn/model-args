@@ -177,6 +177,16 @@ product(true, 'str')  // => 'got boolean!', 'got string!'
 
 Notice how the `altType` values take priority over the `default` values. This is intentional, as the purpose of the `altType` object is to act like a middleman between the expected value existing and resorting to a default value.
 
+## License
+* #### [**ISC License**](https://opensource.org/licenses/ISC)
 
+## Author
+
+**Package author and documentation by:** *William J. Horn*
+
+**Reach me at:**
+
+* [*github*](https://github.com/william-horn)
+* [*email: williamjosephhorn@gmail.com*](williamjosephhorn@gmail.com)
 
 
