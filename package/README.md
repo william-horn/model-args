@@ -119,7 +119,7 @@ const foo = (...args) => {
   const [firstName, lastName, isHealthy, age] = modelArgs([
     { rule: ['string'], default: 'jon' },
     { rule: ['string'], default: 'swinda' },
-    { rule: ['boolean' }
+    { rule: ['boolean'] },
     { rule: ['number'], default: 9001 }
   ], ...args);
 
@@ -132,6 +132,50 @@ foo(false, 'william', 54)  // => 'william', 'swinda', false, 54
 // ...etc
 ```
 
+## Case #3: Assigning Alternate Types
+
+Default values are great and all, but there's one last control option we have in terms of evaluating mismatched types. The `altTypes` object.
+
+**Let's view this new example:**
+
+```js
+const product = (...args) => {
+  const [name, price, quantity, forSale, buy] = modelArgs([
+    { rule: ['string'], default: 'none' },
+    { rule: ['number'] },
+    { rule: ['number'], default: 0 },
+    { rule: ['boolean'], default: true },
+    { rule: ['function', {number: 'got a number', string: 'got a string!'}] }
+  ], ...args);
+
+  console.log(name, price, quantity, forSale, buy);
+}
+
+product(2.43, true, 'soap')       // => 'soap', 2.43, 0, true, undefined
+product('soap', false, 1, 3, 420) // => 'soap', 1, 3, false, 'got a number'
+product(true, true, 1, 1, 'str')  // => 'str', 1, 1, true, 'got a string!'
+// ...etc
+```
+
+You can also combine the `altTypes` field with the `default` field:
+
+```js
+const product = (...args) => {
+  const [name, price] = modelArgs([
+    { rule: ['string', {boolean: 'got boolean!'}], default: 'some default' },
+    { rule: ['number', {string: 'got string!'}], default: 433 },
+  ], ...args);
+
+  console.log(name, price);
+}
+
+product(true, 100)    // => 'got boolean!', 100
+product(300, 300)     // => 'some default', 300
+product()             // => 'some default', 433
+product(true, 'str')  // => 'got boolean!', 'got string!'
+```
+
+Notice how the `altType` values take priority over the `default` values. This is intentional, as the purpose of the `altType` object is to act like a middleman between the expected value existing and resorting to a default value.
 
 
 
