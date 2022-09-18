@@ -43,16 +43,96 @@ The first argument to `modelArgs` (the argument schema array) is **required**, a
 **returns:** *&lt;any[]>*
   - The array of sorted arguments
 
-## Case #1:
+## Case #1: Simple Reassignment
 Assume we want a function with constructors:
 * `function(name<string>, age<number>)`
 * `function(name<string>)`
 * `function(age<number>)`
 
+We can do:
+
 ```js
 const modelArgs = require('model-args');
 
 const foo = (name, age) => {
-  const
+  [name, age] = modelArgs([
+    { rule: ['string'] },
+    { rule: ['number'] }
+  ], name, age);
+
+  console.log(name, age);
 }
+
+foo('bob', 24)  // => 'bob', 24
+foo(24)         // => undefined, 24
+foo('bob')      // => 'bob', undefined
 ```
+
+Notice how we had to repeat the variables `name` and `age` quite a bit. We can avoid this repetition by passing variadic arguments instead:
+
+```js
+const modelArgs = require('model-args');
+
+const foo = (...args) => {
+  const [name, age] = modelArgs([
+    { rule: ['string'] },
+    { rule: ['number'] }
+  ], ...args);
+
+  console.log(name, age);
+}
+
+foo('bob', 24)  // => 'bob', 24
+foo(24)         // => undefined, 24
+foo('bob')      // => 'bob', undefined
+```
+
+We can do this for as many arguments as we want, and for repeating argument types as well. Consider this case:
+
+```js
+const foo = (...args) => {
+  const [firstName, lastName, isHealthy, age] = modelArgs([
+    { rule: ['string'] },
+    { rule: ['string'] },
+    { rule: ['boolean' }
+    { rule: ['number'] }
+  ], ...args);
+
+  console.log(firstName, lastName, isHealth, age);
+}
+
+foo(46, 'william', true, 'horn')  // => 'william', 'horn', true, 46
+foo(54, 75, 23, 'william')        // => 'william', undefined, undefined, undefined
+foo(false, 54)                    // => undefined, undefined, false, 54
+// ...etc
+```
+
+As you can see, we always get the expected values back in the right order. If the argument doesn't exist or it has already been used, missing slots will just be `undefined`.
+
+## Case #2: Assigning Defaults
+
+As mentioned previously, if an argument type is not found or the argument has already been allocated to a slot that it needs to fill, we can use the `default` field inside the schema rows to define a default value.
+
+**Using the last example from Case #1:**
+```js
+const foo = (...args) => {
+  const [firstName, lastName, isHealthy, age] = modelArgs([
+    { rule: ['string'], default: 'jon' },
+    { rule: ['string'], default: 'swinda' },
+    { rule: ['boolean' }
+    { rule: ['number'], default: 9001 }
+  ], ...args);
+
+  console.log(firstName, lastName, isHealth, age);
+}
+
+foo(46, true, 'william')   // => 'william', 'swinda', true, 46
+foo()                      // => 'jon', 'swinda', undefined, 9001
+foo(false, 'william', 54)  // => 'william', 'swinda', false, 54
+// ...etc
+```
+
+
+
+
+

@@ -1,0 +1,28 @@
+{
+  "name": "model-args",
+  "version": "1.0.0",
+  "description": "A quick, easy, and dynamic way to sort function arguments and help emulate method/function overloading",
+  "main": "src/modelArgs.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/william-horn/model-args.git"
+  },
+  "keywords": [
+    "function-overloading",
+    "method-overloading",
+    "arguments",
+    "function-args"
+  ],
+  "author": "William J. Horn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/william-horn/model-args/issues"
+  },
+  "homepage": "https://github.com/william-horn/model-args#readme"
+}
