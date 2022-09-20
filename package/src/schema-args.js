@@ -88,10 +88,12 @@ const schemaArgs = (model, ...args) => {
       }
     }
 
-    if (!found && modelRow.required) {
+    if (found) continue;
+
+    if (modelRow.required) {
       throw new Error(`Argument #${i + 1} missing (expected <${Object.keys(expectedTypes).join('|')}>, got <${type1}>)`);
 
-    } else if (!found && alts && alts.hasOwnProperty(type1)) {
+    } else if (alts && alts.hasOwnProperty(type1)) {
       console.log(startIndex, argsLen, alts, found);
       let final = alts[type1];
       if (typeof final === _function) {
