@@ -1,8 +1,8 @@
 {
-  "name": "model-args",
-  "version": "1.0.0",
-  "description": "A quick, easy, and dynamic way to sort function arguments and help emulate method/function overloading",
-  "main": "src/modelArgs.js",
+  "name": "schema-args",
+  "version": "1.0.3",
+  "description": "A quick, easy, and dynamic way to force function arguments and help emulate method/function overloading",
+  "main": "src/schema-args.js",
   "directories": {
     "lib": "lib"
   },
@@ -11,18 +11,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/william-horn/model-args.git"
+    "url": "git+https://github.com/william-horn/schema-args.git"
   },
   "keywords": [
     "function-overloading",
     "method-overloading",
     "arguments",
-    "function-args"
+    "function-args",
+    "overloading",
+    "overload",
+    "parameters",
+    "args"
   ],
   "author": "William J. Horn",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/william-horn/model-args/issues"
+    "url": "https://github.com/william-horn/schema-args/issues"
   },
-  "homepage": "https://github.com/william-horn/model-args/tree/main/package"
+  "homepage": "https://github.com/william-horn/schema-args/tree/main/package"
 }

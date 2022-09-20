@@ -3,18 +3,17 @@ const modelArgs = require('model-args');
 
 
 
-const product = (...args) => {
-  const [name, price, quantity, forSale, buy] = modelArgs([
-    { rule: ['string'], default: 'none' },
-    { rule: ['number'] },
-    { rule: ['number'], default: 0 },
-    { rule: ['boolean'], default: true },
-    { rule: ['function', {number: 'got a number', string: 'got a string!'}] }
+const foo = (...args) => {
+  const [first, second, third, fourth, fifth, sixth] = modelArgs([
+    { type: { string: true }, got: { number: 'asd'} },
+    { type: { number: true, boolean: true } }, 
+    { type: { string: str => str.toUpperCase() }, required: true},
+    { type: { string: true, number: num => num + 45 }, got: { number: 'ouh' } },
+    { type: { boolean: true, number: true }, got: { number: () => 8 } },
+    { type: { number: true } }
   ], ...args);
 
-  console.log(name, price, quantity, forSale, buy);
+  console.log(first, second, third, fourth, fifth, sixth);
 }
 
-product(2.43, true, 'soap')       // => 'soap', 2.43, 0, true, undefined
-product('soap', false, 1, 3, 420) // => 'soap', 1, 3, false, 'got a number'
-product(true, true, 1, 1, 'str')  // => 'str', 1, 1, true, 'got a string!'
+foo(5, 'there', 'world', 78, 0);
